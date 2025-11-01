@@ -1,4 +1,6 @@
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
+
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
@@ -9,12 +11,15 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+
+// css
 import "../global.css";
 
 const Index = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [signingIn, setSigningIn] = useState(false);
+    const router = useRouter();
 
     return (
         <KeyboardAvoidingView
@@ -62,7 +67,7 @@ const Index = () => {
                                 signingIn ? "bg-gray-400" : "bg-green-600"
                             }`}
                             onPress={() => {
-                                console.log("Sign In Pressed");
+                                router.replace("/(tabs)");
                             }}
                             disabled={signingIn}
                         >
