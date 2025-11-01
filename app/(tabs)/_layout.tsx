@@ -6,12 +6,20 @@ export default function TabLayout() {
         <Stack
             screenOptions={{
                 headerShown: false,
+                headerBackTitle: "Back",
             }}
         >
             <Stack.Screen
                 name="index"
                 options={{
                     title: "Home",
+                }}
+            />
+            <Stack.Screen
+                name="settings"
+                options={{
+                    title: "Settings",
+                    headerShown: true,
                 }}
             />
         </Stack>
