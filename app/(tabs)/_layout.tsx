@@ -6,7 +6,6 @@ export default function TabLayout() {
         <Stack
             screenOptions={{
                 headerShown: false,
-                headerBackTitle: "Back",
             }}
         >
             <Stack.Screen
@@ -20,6 +19,15 @@ export default function TabLayout() {
                 options={{
                     title: "Settings",
                     headerShown: true,
+                    headerBackTitle: "Back",
+                }}
+            />
+            <Stack.Screen
+                name="screens/users"
+                options={{
+                    title: "Users",
+                    headerShown: true,
+                    headerBackTitle: "Back",
                 }}
             />
         </Stack>

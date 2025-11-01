@@ -63,7 +63,10 @@ const Index = () => {
             </View>
 
             {/* User Summary Card */}
-            <View className="bg-white rounded-2xl p-6 mb-8 flex-row items-center shadow-sm border border-gray-100">
+            <TouchableOpacity
+                onPress={() => router.push("/screens/users")}
+                className="bg-white rounded-2xl p-6 mb-8 flex-row items-center shadow-sm"
+            >
                 <View className="bg-green-100 p-3 rounded-xl">
                     <Entypo name="user" size={32} color="#16a34a" />
                 </View>
@@ -75,7 +78,7 @@ const Index = () => {
                         {usersNotOnline}
                     </Text>
                 </View>
-            </View>
+            </TouchableOpacity>
 
             {/* Announcement Section */}
             <Text className="text-xl font-semibold text-gray-800 mb-3">
