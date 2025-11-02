@@ -1,12 +1,23 @@
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Image, Pressable, Text, View } from "react-native";
+import { useAuth } from "../context/authContext";
 import "../global.css";
 
 export default function Settings() {
+    const { logout } = useAuth();
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
     const router = useRouter();
+
+    const handleSignOut = async () => {
+        try {
+            await logout();
+            Alert.alert("Signed Out", "You have been signed out.");
+        } catch (error: any) {
+            Alert.alert("Error", error.message);
+        }
+    };
 
     function confirmSignOut() {
         Alert.alert("Sign out", "Are you sure you want to sign out?", [
@@ -16,7 +27,7 @@ export default function Settings() {
                 style: "destructive",
                 onPress: () => {
                     console.log("Signed out");
-                    router.replace("/(auth)");
+                    handleSignOut();
                 },
             },
         ]);

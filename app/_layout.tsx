@@ -5,6 +5,7 @@ import { AuthProvider, useAuth } from "./context/authContext";
 
 function RootNavigator() {
     const { user } = useAuth();
+    console.log(user);
 
     // Redirect depending on login status
     if (user === null) {
