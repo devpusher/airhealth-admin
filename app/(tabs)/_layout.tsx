@@ -30,6 +30,14 @@ export default function TabLayout() {
                     headerBackTitle: "Back",
                 }}
             />
+            <Stack.Screen
+                name="screens/pinnedReport"
+                options={{
+                    title: "Report Hotspot",
+                    headerShown: true,
+                    headerBackTitle: "Back",
+                }}
+            />
         </Stack>
     );
 }

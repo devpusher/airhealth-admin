@@ -80,6 +80,20 @@ const Index = () => {
                 </View>
             </TouchableOpacity>
 
+            <Text className="text-xl font-semibold text-gray-800 mb-3">
+                Report Hotspot
+            </Text>
+            <TouchableOpacity
+                onPress={() => {
+                    router.push("/(tabs)/screens/pinnedReport");
+                }}
+                className="bg-white rounded-2xl shadow-sm border border-gray-100 py-4 shadow-sm active:opacity-80 mb-8"
+            >
+                <Text className="text-black text-center text-lg font-base">
+                    View Pinned Report
+                </Text>
+            </TouchableOpacity>
+
             {/* Announcement Section */}
             <Text className="text-xl font-semibold text-gray-800 mb-3">
                 Notification Message
