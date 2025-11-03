@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { LinearGradient } from "expo-linear-gradient";
+import { router } from "expo-router";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
@@ -21,7 +22,7 @@ export default function PinnedReport() {
     const [loading, setLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(true); // for first load
 
-    // 🔄 Load existing pinned report data on mount
+    // Load existing pinned report data on mount
     useEffect(() => {
         const fetchPinnedReport = async () => {
             try {
@@ -53,7 +54,7 @@ export default function PinnedReport() {
         fetchPinnedReport();
     }, []);
 
-    // 📸 Pick image and convert to Base64
+    // Pick image and convert to Base64
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -69,7 +70,7 @@ export default function PinnedReport() {
         }
     };
 
-    // 💾 Save message and base64 image to Firestore
+    // Save message and base64 image to Firestore
     const handleSave = async () => {
         if (!message.trim() && !image) {
             Alert.alert(
@@ -140,6 +141,9 @@ export default function PinnedReport() {
                     }}
                 >
                     <TouchableOpacity
+                        onPress={() => {
+                            router.push("/screens/airmap");
+                        }}
                         activeOpacity={0.8}
                         className="flex items-center justify-center bg-white rounded-[10px] p-4"
                         style={{
