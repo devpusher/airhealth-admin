@@ -38,6 +38,14 @@ export default function TabLayout() {
                     headerBackTitle: "Back",
                 }}
             />
+            <Stack.Screen
+                name="screens/airmap"
+                options={{
+                    title: "AirHealth Map",
+                    headerShown: true,
+                    headerBackTitle: "Back",
+                }}
+            />
         </Stack>
     );
 }
