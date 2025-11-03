@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import {
     collection,
     getFirestore,
@@ -6,7 +7,13 @@ import {
     query,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import {
+    ActivityIndicator,
+    FlatList,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { app } from "../../../firebaseConfig";
 import "../../global.css";
 
@@ -14,6 +21,7 @@ export default function Users() {
     const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const db = getFirestore(app);
+    const router = useRouter();
 
     useEffect(() => {
         const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
@@ -49,7 +57,18 @@ export default function Users() {
             keyExtractor={(item) => item.id}
             contentContainerStyle={{ padding: 16 }}
             renderItem={({ item }) => (
-                <View className="bg-white rounded-2xl p-4 mb-3 shadow">
+                <TouchableOpacity
+                    onPress={() =>
+                        router.push({
+                            pathname: "/(tabs)/screens/specifcUser",
+                            params: {
+                                userId: item.id,
+                                userName: item.name || "Unnamed User",
+                            },
+                        })
+                    }
+                    className="bg-white rounded-2xl p-4 mb-3 shadow active:opacity-80"
+                >
                     <Text className="text-lg font-semibold text-gray-800">
                         {item.name || "Unnamed User"}
                     </Text>
@@ -62,7 +81,7 @@ export default function Users() {
                             ? item.createdAt.toDate().toLocaleDateString()
                             : "Unknown date"}
                     </Text>
-                </View>
+                </TouchableOpacity>
             )}
         />
     );
