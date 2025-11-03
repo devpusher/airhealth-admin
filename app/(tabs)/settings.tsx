@@ -55,7 +55,7 @@ export default function Settings() {
                 </View>
 
                 {/* Profile Card */}
-                <View className="bg-white rounded-xl p-4 shadow-sm mb-4">
+                {/* <View className="bg-white rounded-xl p-4 shadow-sm mb-4">
                     <View className="flex-row items-center">
                         <View className="w-14 h-14 rounded-full bg-indigo-500 items-center justify-center mr-4">
                             <Text className="text-white font-bold">AH</Text>
@@ -83,7 +83,7 @@ export default function Settings() {
                             </Text>
                         </Pressable>
                     </View>
-                </View>
+                </View> */}
 
                 {/* Sign Out */}
                 <View className="mb-4">

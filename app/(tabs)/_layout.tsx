@@ -46,6 +46,14 @@ export default function TabLayout() {
                     headerBackTitle: "Back",
                 }}
             />
+            <Stack.Screen
+                name="screens/specificUser"
+                options={{
+                    title: "User Reports",
+                    headerShown: true,
+                    headerBackTitle: "Back",
+                }}
+            />
         </Stack>
     );
 }

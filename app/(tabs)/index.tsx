@@ -1,7 +1,9 @@
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import {
+    ActivityIndicator,
     Platform,
     ScrollView,
     StatusBar,
@@ -10,16 +12,31 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { db } from "../../firebaseConfig"; // ✅ make sure this path is correct
 import "../global.css";
 
 const Index = () => {
     const paddingTop =
         Platform.OS === "ios" ? 44 : StatusBar.currentHeight || 0;
 
-    // Sample data
-    const usersNotOnline = 42;
+    const [totalUsers, setTotalUsers] = useState<number | null>(null);
     const [announcement, setAnnouncement] = useState("");
     const router = useRouter();
+
+    // ✅ Fetch total number of users from Firestore collection "users"
+    useEffect(() => {
+        const fetchUserCount = async () => {
+            try {
+                const snapshot = await getDocs(collection(db, "users"));
+                setTotalUsers(snapshot.size); // snapshot.size returns total doc count
+            } catch (error) {
+                console.error("Error fetching user count:", error);
+                setTotalUsers(0);
+            }
+        };
+
+        fetchUserCount();
+    }, []);
 
     // Handle Notify Users button press
     const handleNotifyUsers = () => {
@@ -50,9 +67,7 @@ const Index = () => {
 
                 <TouchableOpacity
                     className="bg-white p-3 rounded-full shadow-sm border border-gray-200"
-                    onPress={() => {
-                        router.push("/settings");
-                    }}
+                    onPress={() => router.push("/settings")}
                 >
                     <MaterialCommunityIcons
                         name="face-man-profile"
@@ -74,27 +89,30 @@ const Index = () => {
                     <Text className="text-gray-600 text-base font-medium">
                         Total Users
                     </Text>
-                    <Text className="text-3xl font-bold text-green-700">
-                        {usersNotOnline}
-                    </Text>
+                    {totalUsers === null ? (
+                        <ActivityIndicator color="#16a34a" size="small" />
+                    ) : (
+                        <Text className="text-3xl font-bold text-green-700">
+                            {totalUsers}
+                        </Text>
+                    )}
                 </View>
             </TouchableOpacity>
 
+            {/* Report Hotspot */}
             <Text className="text-xl font-semibold text-gray-800 mb-3">
                 Report Hotspot
             </Text>
             <TouchableOpacity
-                onPress={() => {
-                    router.push("/(tabs)/screens/pinnedReport");
-                }}
-                className="bg-white rounded-2xl shadow-sm border border-gray-100 py-4 shadow-sm active:opacity-80 mb-8"
+                onPress={() => router.push("/(tabs)/screens/pinnedReport")}
+                className="bg-white rounded-2xl shadow-sm border border-gray-100 py-4 active:opacity-80 mb-8"
             >
                 <Text className="text-black text-center text-lg font-base">
                     View Pinned Report
                 </Text>
             </TouchableOpacity>
 
-            {/* Announcement Section */}
+            {/* Notification Section */}
             <Text className="text-xl font-semibold text-gray-800 mb-3">
                 Notification Message
             </Text>
