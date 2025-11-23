@@ -12,7 +12,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { db } from "../../firebaseConfig"; // ✅ make sure this path is correct
+import { db } from "../../firebaseConfig";
 import "../global.css";
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
     const [announcement, setAnnouncement] = useState("");
     const router = useRouter();
 
-    // ✅ Fetch total number of users from Firestore collection "users"
+    // Fetch total number of users from Firestore collection "users"
     useEffect(() => {
         const fetchUserCount = async () => {
             try {
@@ -39,9 +39,41 @@ const Index = () => {
     }, []);
 
     // Handle Notify Users button press
-    const handleNotifyUsers = () => {
-        console.log("Notify Users clicked! Message:", announcement);
-        setAnnouncement("");
+    const handleNotifyUsers = async () => {
+        if (!announcement.trim()) {
+            alert("Message cannot be empty.");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "https://airhealth-backend.onrender.com/api/notifications/broadcast",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        title: "AirHealth Notice",
+                        body: announcement,
+                    }),
+                }
+            );
+
+            const result = await response.json();
+            console.log("Broadcast result:", result);
+
+            if (response.ok) {
+                alert("Notification sent successfully!");
+            } else {
+                alert("Failed to send notification: " + result.error);
+            }
+
+            setAnnouncement("");
+        } catch (error) {
+            console.error("Error sending broadcast:", error);
+            alert("Could not send notification. Check backend connection.");
+        }
     };
 
     return (
